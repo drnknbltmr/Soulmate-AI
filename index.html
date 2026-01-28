@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soulmate AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Modern Pink Theme */
+        body { 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; 
+        }
+        
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-screen { 
+            max-width: 400px; 
+            width: 100%; 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            display: none; 
+            margin: 0 auto;
+            border: none;
+            border-radius: 20px;
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        .app-screen::-webkit-scrollbar { display: none; }
+
+        .active-screen { 
+            display: block; 
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Inputs */
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid #ffc0cb;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 105, 180, 0.25);
+            border-color: #ff69b4;
+        }
+
+        .btn-primary {
+            background: #ff69b4;
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            color: #d63384;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #ffc0cb;
+            padding-bottom: 5px;
+        }
+
+        img.my-photo { 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3); 
+            border: 4px solid white;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Loading Bar Animation */
+        .progress { height: 6px; border-radius: 10px; }
+        .progress-bar { background-color: #d63384; transition: width 0.5s; }
+
+        /* Final Screen: Lighter Red */
+        #screen-4 {
+            background: #ff6b6b; /* Soft Salmon/Red */
+            color: white;
+        }
+
+        /* Gold Pro Card */
+        .pro-card {
+            border: 2px solid #ffd700;
+            background: linear-gradient(145deg, #fffbf0, #fff);
+        }
+
+        /* Stats in Landing Page */
+        .stat-box {
+            text-align: center;
+        }
+        .stat-number {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.2rem;
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="screen-landing" class="app-screen active-screen card p-5 text-center">
+            <div class="mb-4">
+                <i class="fas fa-heart-pulse text-danger" style="font-size: 4rem;"></i>
+            </div>
+            <h2 class="fw-bold mb-2" style="color: #d63384;">Soulmate AI</h2>
+            <p class="text-muted mb-4 small">The world's most advanced partner generation engine.</p>
+
+            <div class="row mb-4 g-2">
+                <div class="col-4 stat-box border-end">
+                    <div class="stat-number">500k+</div>
+                    <div class="stat-label">Matches</div>
+                </div>
+                <div class="col-4 stat-box border-end">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="col-4 stat-box">
+                    <div class="stat-number">4.9<i class="fas fa-star text-warning small ms-1"></i></div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <div class="alert alert-success py-2 mb-4 small" style="background: rgba(25, 135, 84, 0.1); border: none; color: #198754;">
+                <i class="fas fa-certificate me-2"></i> 165 images currently generating 
+            </div>
+
+            <button class="btn btn-primary w-100 py-3 shadow" onclick="switchScreen('screen-pricing')">
+                Start Generating <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+            <p class="mt-3 text-muted" style="font-size: 0.6rem;">Powered by NeuralLink V4 Engine</p>
+        </div>
+        
+        <div id="screen-pricing" class="app-screen card p-4">
+            <div class="text-center mb-4">
+                <h3 style="color: #d63384; font-weight: bold;">Select Plan</h3>
+                <p class="text-muted small">Choose your generation tier</p>
+            </div>
+
+            <div class="card p-3 mb-3 pro-card position-relative shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-crown text-warning me-2"></i>PRO</h5>
+                    <span class="badge bg-warning text-dark">POPULAR</span>
+                </div>
+                <h3 class="fw-bold">$7.99<small class="text-muted fs-6">/month</small></h3>
+                <ul class="list-unstyled small text-muted mt-2 mb-3">
+                    <li><i class="fas fa-check text-success me-2"></i>V5 Neuralink Plus Engine</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Image Input</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Unlimited Generations</li>
+                </ul>
+                <button class="btn btn-secondary w-100 disabled" style="opacity: 0.7; cursor: not-allowed;" disabled>
+                    Waitlist Full / Unavailable
+                </button>
+            </div>
+
+            <div class="card p-3 border-1 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0 fw-bold text-secondary">Basic</h5>
+                </div>
+                <h3 class="fw-bold text-secondary">Free<small class="text-muted fs-6">/1 generation</small></h3>
+                <ul class="list-unstyled small text-muted mt-2 mb-3">
+                    <li><i class="fas fa-check text-success me-2"></i>Standard Image Gen</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Limited Parameters</li>
+                </ul>
+                <button class="btn btn-outline-primary w-100" onclick="switchScreen('screen-1')">
+                    Continue with Free
+                </button>
+            </div>
+        </div>
+
+        <div id="screen-1" class="app-screen card p-4">
+            <h3 class="text-center mb-2" style="color: #d63384;">✨ Soulmate AI</h3>
+            <p class="text-muted small text-center mb-0">Enter <span class="fw-bold">your</span> details to generate match.</p>
+            
+            <form id="quizForm">
+                
+                <div class="section-title">User Configuration</div>
+
+                <label class="small text-muted">1. Your Gender</label>
+                <select class="form-select mb-2">
+                    <option selected disabled>Select...</option>
+                    <option>Female</option><option>Male</option><option>Non-binary</option><option>Other</option>
+                </select>
+
+                <label class="small text-muted">2. Target Model Gender</label>
+                <select class="form-select mb-2">
+                    <option selected disabled>Select to generate...</option>
+                    <option>Male</option><option>Female</option><option>Non-binary</option><option>Any</option>
+                </select>
+                
+                <label class="small text-muted">3. Your Name</label>
+                <input type="text" class="form-control mb-2" placeholder="Required" required>
+
+                <label class="small text-muted">4. Your Age</label>
+                <input type="number" class="form-control mb-2" placeholder="e.g. 21" required>
+
+                <div class="section-title">Your Characteristics</div>
+
+                <label class="small text-muted">5. Your Eye Color</label>
+                <select class="form-select mb-2">
+                    <option>Brown</option><option>Blue</option><option>Green</option><option>Hazel</option><option>Grey</option><option>Other</option>
+                </select>
+
+                <label class="small text-muted">6. Your Hair Color</label>
+                <select class="form-select mb-2">
+                    <option>Blonde</option><option>Brunette</option><option>Black</option><option>Red</option><option>Other</option>
+                </select>
+
+                <div class="section-title">Preferences & Personality</div>
+
+                <label class="small text-muted">7. Cats or Dogs</label>
+                <select class="form-select mb-2">
+                    <option>Cats</option><option>Dogs</option><option>Both</option>
+                </select>
+
+                <label class="small text-muted">8. Caffeine Source</label>
+                <select class="form-select mb-2">
+                    <option>Coffee</option><option>Tea</option><option>Neither</option>
+                </select>
+
+                <label class="small text-muted">9. Circadian Rhythm</label>
+                <select class="form-select mb-2">
+                    <option>Morning Bird</option><option>Night Owl</option>
+                </select>
+
+                <label class="small text-muted">10. Flavor Profile</label>
+                <select class="form-select mb-2">
+                    <option>Sweet</option><option>Savory</option>
+                </select>
+
+                <label class="small text-muted">11. Preferred Season</label>
+                <select class="form-select mb-2">
+                    <option>Summer</option><option>Winter</option><option>Autumn</option><option>Spring</option>
+                </select>
+
+                <label class="small text-muted">12. Ideal Social Scenario</label>
+                <select class="form-select mb-2">
+                    <option>Fine Dining</option>
+                    <option>Nature Excursion</option>
+                    <option>Home/Streaming</option>
+                    <option>Adventure/Thrill</option>
+                </select>
+
+                <label class="small text-muted">13. Olfactory Preference (Smell)</label>
+                <input type="text" class="form-control mb-2" placeholder="e.g. Vanilla, Rain">
+
+                <label class="small text-muted">14. Favorite Food</label>
+                <input type="text" class="form-control mb-2" placeholder="e.g. Pasta">
+
+                <label class="small text-muted">15. Favorite Music Artist/Band</label>
+                <input type="text" class="form-control mb-4" placeholder="e.g. The Weeknd, Arctic Monkeys">
+
+                <button type="button" class="btn btn-primary w-100 shadow mb-3" onclick="startCalculation()">Generate Ideal Partner</button>
+            </form>
+        </div>
+
+        <div id="screen-2" class="app-screen text-center p-5">
+            <div class="spinner-border text-primary mb-4" style="width: 3rem; height: 3rem;" role="status"></div>
+            <h5 id="loading-text" class="fw-bold" style="color: #333;">Initializing neural network...</h5>
+            <p class="text-muted small mt-2">Please do not close the browser.</p>
+            
+            <div class="progress mt-4">
+                <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+            <p id="code-lines" class="text-start mt-4 text-muted small font-monospace" style="opacity: 0.7; font-size: 0.7rem;">
+                > connecting to server...
+            </p>
+        </div>
+
+        <div id="screen-3" class="app-screen card p-4 text-center">
+            
+            <div id="reveal-state-hidden">
+                <div class="mb-4 text-success" style="font-size: 3rem;"><i class="fas fa-check-circle"></i></div>
+                <h2 class="mb-2">Generation Complete</h2>
+                <p class="text-muted small">The AI has successfully synthesized the image of your optimal partner based on your physical traits and personality vectors.</p>
+                <hr>
+                <button class="btn btn-dark w-100 py-3 rounded-pill shadow" onclick="revealImage()">
+                    <i class="fas fa-eye me-2"></i> Reveal Result
+                </button>
+            </div>
+
+            <div id="reveal-state-shown" style="display: none;">
+                <h5 class="text-muted mb-3 small text-uppercase ls-1">Generated Output</h5>
+                
+                <img src="https://i.imgur.com/2sshS97.jpeg" class="img-fluid my-photo mb-4 shadow" alt="Generated Image">
+                
+                <p class="small text-muted mb-4">Analysis: 167.67% Compatibility Rating based on user parameters.</p>
+                
+                <button class="btn btn-outline-danger w-100 rounded-pill" onclick="showValentine()">Satisfied?</button>
+            </div>
+        </div>
+
+        <div id="screen-4" class="app-screen card p-5 text-center">
+            <h1 class="display-1 text-white">❤️</h1>
+            <h2 class="mb-4 text-white">Will you be my Valentine?</h2>
+            <p class="mb-5 fs-5" style="color: rgba(255,255,255,0.8);">te iubesc</p>
+            
+            <button class="btn btn-light btn-lg w-100 fw-bold text-danger rounded-pill shadow" onclick="alert('munciumesc ❤️')">HELL YEAH</button>
+        </div>
+
+    </div>
+
+    <script>
+        function switchScreen(screenId) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+        }
+
+        function startCalculation() {
+            switchScreen('screen-2');
+            let bar = document.getElementById('progress-bar');
+            let text = document.getElementById('loading-text');
+            let consoleText = document.getElementById('code-lines');
+            let width = 0;
+            
+            // 20 Second Loading Sequence
+            let interval = setInterval(() => {
+                width += 1;
+                bar.style.width = width + "%";
+                
+                if (width === 10) { 
+                    text.innerText = "Processing User Vectors..."; 
+                    consoleText.innerHTML += "<br>> reading inputs...";
+                }
+                if (width === 30) { 
+                    text.innerText = "Analyzing Biometrics..."; 
+                    consoleText.innerHTML += "<br>> loading convolutional neural network...";
+                }
+                if (width === 50) { 
+                    text.innerText = "Synthesizing Facial Features..."; 
+                    consoleText.innerHTML += "<br>> fine tuning model...";
+                }
+                if (width === 70) { 
+                    text.innerText = "Refining Visual Data..."; 
+                    consoleText.innerHTML += "<br>> texture rendering...";
+                }
+                if (width === 90) { 
+                    text.innerText = "Finalizing Output..."; 
+                    consoleText.innerHTML += "<br>> export_image.jpg";
+                }
+
+                if (width >= 100) {
+                    clearInterval(interval);
+                    switchScreen('screen-3');
+                }
+            }, 200); // 200ms * 100 steps = 20,000ms (20 seconds)
+        }
+
+        function revealImage() {
+            document.getElementById('reveal-state-hidden').style.display = 'none';
+            document.getElementById('reveal-state-shown').style.display = 'block';
+        }
+
+        function showValentine() {
+            switchScreen('screen-4');
+        }
+    </script>
+</body>
+</html>
